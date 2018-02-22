@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableBf4Stats extends Migration
+class CreatePlayersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateTableBf4Stats extends Migration
      */
     public function up()
     {
-        Schema::create('bf4_player_stats_log', function (Blueprint $table) {
+        Schema::create('players', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateTableBf4Stats extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Bf4Stats');
+        Schema::dropIfExists('players');
     }
 }

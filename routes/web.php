@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \Laravel\Lumen\Routing\Router $router
+ */
 
 /*
 |--------------------------------------------------------------------------
@@ -12,5 +15,10 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return "Hello world";
 });
+
+$router->post('stats', [
+    'as' => 'stats_upload',
+    'uses' => 'GameStatsController@uploadStats'
+]);
