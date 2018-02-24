@@ -15,6 +15,7 @@ class CreateSiegeOperatorStatsLogTable extends Migration
     {
         Schema::create('siege_operator_stats_log', function (Blueprint $table) {
             $table->increments('id');
+            $table->string("event");
             $table->integer("player_id")->unsigned();
             $table->string("name");
             $table->integer("kills");

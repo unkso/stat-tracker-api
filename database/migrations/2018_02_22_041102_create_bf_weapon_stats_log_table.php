@@ -15,6 +15,7 @@ class CreateBfWeaponStatsLogTable extends Migration
     {
         Schema::create('bf_weapon_stats_log', function (Blueprint $table) {
             $table->increments('id');
+            $table->string("event");
             $table->enum("game", ["bf1, bf4"]);
             $table->integer("player_id")->unsigned();
             $table->string("name");

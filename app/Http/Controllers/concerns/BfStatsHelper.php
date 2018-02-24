@@ -15,11 +15,22 @@ class BfStatsHelper
     private $db;
 
     /** @var array */
-    private static $playerFields = [
+    private static $generalFields = [
         "game",
         "event",
+        "accuracy",
+        "headshots",
+        "heals",
+        "killassists",
         "kills",
-        "deaths"
+        "deaths",
+        "ptfo",
+        "repairs",
+        "resupplies",
+        "roundsplayed",
+        "squardscore",
+        "suppressionassists",
+        "wins"
     ];
 
     /** @var array */
@@ -55,11 +66,9 @@ class BfStatsHelper
      */
     public function saveStats($eventKey, $game, array $stats) {
         if (!empty($stats['general'])) {
-            foreach($stats['general'] as $generalStats) {
-                $generalStats['game'] = $game;
-                $generalStats['event'] = $eventKey;
-                $this->insertGeneralStats($generalStats);
-            }
+            $stats["general"]['game'] = $game;
+            $stats["general"]['event'] = $eventKey;
+            $this->insertGeneralStats($stats["general"]);
         }
 
         if (!empty($stats['kits'])) {
@@ -80,7 +89,7 @@ class BfStatsHelper
     }
 
     public function insertGeneralStats(array $stats) {
-        $record = $this->buildRecordFromArray(self::$playerFields, $stats);
+        $record = $this->buildRecordFromArray(self::$generalFields, $stats);
         return $this->db->table('bf_general_stats_log')->insert($record);
     }
 

@@ -15,10 +15,22 @@ class CreateBfGeneralStatsLogTable extends Migration
     {
         Schema::create('bf_general_stats_log', function (Blueprint $table) {
             $table->increments('id');
+            $table->string("event");
             $table->enum("game", ["bf1, bf4"]);
             $table->integer("player_id")->unsigned();
+            $table->double("accuracy")->unsigned();
+            $table->integer("headshots")->unsigned();
+            $table->integer("heals")->unsigned();
+            $table->integer("killassists")->unsigned();
             $table->integer("kills")->unsigned();
             $table->integer("deaths")->unsigned();
+            $table->integer("ptfo")->unsigned();
+            $table->integer("repairs")->unsigned();
+            $table->integer("resupplies")->unsigned();
+            $table->integer("roundsplayed")->unsigned();
+            $table->integer("squadscore")->unsigned();
+            $table->integer("suppressionassists")->unsigned();
+            $table->integer("wins")->unsigned();
             $table->timestamps();
         });
 

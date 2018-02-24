@@ -41,21 +41,22 @@ class GameStatsHelper
     public function saveSinglePlayerStats ($eventKey, array $player) {
         try {
             $this->db->beginTransaction();
-            if (!empty($player["bf1"])) {
-                $this->bfStatsHelper->saveStats($eventKey, BfStatsHelper::GAME_BF1, $player["bf1"]);
+            if (!empty($player["games"]["bf1"])) {
+                $this->bfStatsHelper->saveStats($eventKey, BfStatsHelper::GAME_BF1, $player["games"]["bf1"]);
             }
 
-            if (!empty($player["bf4"])) {
-                $this->bfStatsHelper->saveStats($eventKey, BfStatsHelper::GAME_BF4, $player["bf4"]);
+            if (!empty($player["games"]["bf4"])) {
+                $this->bfStatsHelper->saveStats($eventKey, BfStatsHelper::GAME_BF4, $player["games"]["bf4"]);
             }
 
-            if (!empty($player['siege'])) {
-                $this->siegeStatsHelper->saveStats($eventKey, $player["siege"]);
+            if (!empty($player["games"]['siege'])) {
+                $this->siegeStatsHelper->saveStats($eventKey, $player["games"]["siege"]);
             }
 
             $this->db->commit();
         } catch (\Exception $e) {
             $this->db->rollBack();
+            throw $e;
         }
     }
 }

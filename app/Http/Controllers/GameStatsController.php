@@ -19,20 +19,20 @@ class GameStatsController extends Controller
 
     public function uploadStats(Request $request) {
         $eventKey = $request->input('event');
-        $playerData = $request->input('players');
+        $playersData = $request->input('players');
 
         if (empty($eventKey)) {
             return new Response(["error" => 'Parameter "event" is missing.'], 400);
         }
 
-        if (empty($playerData)) {
+        if (empty($playersData)) {
             return new Response(["error" => 'Parameter "players" is missing.'], 400);
         }
 
         try {
-            $this->gameStatsHelper->saveAllPlayerStats($eventKey, $playerData);
+            $this->gameStatsHelper->saveAllPlayerStats($eventKey, $playersData);
 
-            return new Response([], 200);
+            return new Response(["success" => true], 200);
         } catch (\Exception $e) {
             return new Response(["error" => "Operation failed: {$e->getMessage()}"], 500);
         }
