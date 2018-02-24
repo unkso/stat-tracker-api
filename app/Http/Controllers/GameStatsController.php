@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\concerns\GameStatsHelper;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -11,9 +12,9 @@ class GameStatsController extends Controller
     /** @var GameStatsHelper */
     private $gameStatsHelper;
 
-    public function __construct()
+    public function __construct(DatabaseManager $db)
     {
-        $this->gameStatsHelper = new GameStatsHelper();
+        $this->gameStatsHelper = new GameStatsHelper($db);
     }
 
     public function uploadStats(Request $request) {
@@ -28,10 +29,12 @@ class GameStatsController extends Controller
             return new Response(["error" => 'Parameter "players" is missing.'], 400);
         }
 
-        $this->gameStatsHelper->saveAllStats($eventKey, $playerData);
+        try {
+            $this->gameStatsHelper->saveAllPlayerStats($eventKey, $playerData);
 
-        return [
-
-        ];
+            return new Response([], 200);
+        } catch (\Exception $e) {
+            return new Response(["error" => "Operation failed: {$e->getMessage()}"], 500);
+        }
     }
 }

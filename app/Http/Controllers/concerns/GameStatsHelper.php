@@ -26,7 +26,6 @@ class GameStatsHelper
      * @param $eventKey
      * @param array $playersStats
      * @throws \Exception
-     * @throws \Throwable
      */
     public function saveAllPlayerStats ($eventKey, array $playersStats) {
         foreach ($playersStats as $player) {
@@ -38,7 +37,6 @@ class GameStatsHelper
      * @param $eventKey
      * @param array $player
      * @throws \Exception
-     * @throws \Throwable
      */
     public function saveSinglePlayerStats ($eventKey, array $player) {
         try {
