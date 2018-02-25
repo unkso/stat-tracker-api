@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -15,13 +16,14 @@ class CreateBfWeaponStatsLogTable extends Migration
     {
         Schema::create('bf_weapon_stats_log', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum("game", ["bf1, bf4"]);
+            $table->string("event");
+            $table->string("game");
             $table->integer("player_id")->unsigned();
             $table->string("name");
             $table->integer("kills");
             $table->integer("shots");
             $table->integer("hits");
-            $table->float("accuracy");
+            $table->double("accuracy");
             $table->timestamps();
         });
 
@@ -30,6 +32,12 @@ class CreateBfWeaponStatsLogTable extends Migration
                 ->references('id')
                 ->on('players')
                 ->onDelete('cascade');
+
+            DB::statement("
+              ALTER TABLE bf_weapon_stats_log 
+              MODIFY COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+              MODIFY COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+            ");
         });
     }
 

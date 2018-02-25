@@ -18,6 +18,11 @@ $router->get('/', function () use ($router) {
     return "Hello world";
 });
 
+$router->get('/debug', function () use ($router) {
+    return phpinfo();
+});
+
+
 $router->post('stats', [
     'as' => 'stats_upload',
     'uses' => 'GameStatsController@uploadStats'
