@@ -36,11 +36,6 @@ class R6SiegeStatsHelper
         $this->db = $db;
     }
 
-    /**
-     * @param $eventKey
-     * @param $playerId
-     * @param array $stats
-     */
     public function saveStats($eventKey, $playerId, array $stats) {
         if (!empty($stats["operators"])) {
             foreach($stats["operators"] as $operatorStats) {
@@ -54,5 +49,23 @@ class R6SiegeStatsHelper
     public function insertOperatorStats(array $stats) {
         $record = $this->buildRecordFromArray(self::$operatorFields, $stats);
         return $this->db->table("siege_operator_stats_log")->insert($record);
+    }
+
+    public function findLatestStats(array $eventFilters, array $playerFilters) {
+        $query = $this->db->table('siege_operator_stats_log')
+            ->select(['siege_operator_stats_log.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'siege_operator_stats_log.player_id')
+            ->orderBy('siege_operator_stats_log.created_at', 'desc')
+            ->groupBy(['players.id', 'siege_operator_stats_log.name']);
+
+        if (!empty($eventFilters)) {
+            $query->whereIn('event', $eventFilters);
+        }
+
+        if (!empty($playerFilters)) {
+            $query->whereIn('player_id', $playerFilters);
+        }
+
+        return $query->get()->toArray();
     }
 }

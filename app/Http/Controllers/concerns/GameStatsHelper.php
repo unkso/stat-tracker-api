@@ -65,34 +65,4 @@ class GameStatsHelper
             throw $e;
         }
     }
-
-    public function getStats(array $gameFilters = [], array $eventFilters = [], array $playerFilters = []) {
-        $results = [];
-        $bf1Results = [];
-        $bf4Results = [];
-        $siegeResults = [];
-
-        if (!empty($playerFilters)) {
-            $players = (array)$this->db->table('players')
-                ->whereIn("gamertag", $playerFilters)
-                ->get();
-
-            $playerFilters = [];
-            foreach($players as $player) {
-                $playerFilters[] = $player['id'];
-            }
-        }
-
-        if (empty($gameFilters) || in_array(BfStatsHelper::GAME_BF1, $gameFilters)) {
-            $bf1Results = [];
-        }
-
-        if (empty($gameFilters) || in_array(BfStatsHelper::GAME_BF4, $gameFilters)) {
-            $bf4Results = [];
-        }
-
-        if (empty($gameFilters) || in_array(R6SiegeStatsHelper::GAME_R6_SIEGE, $gameFilters)) {
-            $siegeResults = [];
-        }
-    }
 }

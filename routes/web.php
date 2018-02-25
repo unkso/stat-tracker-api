@@ -23,7 +23,17 @@ $router->post('stats', [
     'uses' => 'GameStatsController@uploadStats'
 ]);
 
-$router->get('stats', [
-    'as' => 'get_stats',
-    'uses' => 'GameStatsController@getStats'
+$router->get('stats/bf1/latest', [
+    'as' => 'get_latest_stats_bf1',
+    'uses' => 'Bf1StatsController@getLatestStats'
+]);
+
+$router->get('stats/bf4/latest', [
+    'as' => 'get_latest_stats_bf4',
+    'uses' => 'Bf4StatsController@getLatestStats'
+]);
+
+$router->get('stats/r6siege/latest', [
+    'as' => 'get_latest_stats_r6siege',
+    'uses' => 'R6SiegeStatsController@getLatestStats'
 ]);
