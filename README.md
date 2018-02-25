@@ -7,8 +7,8 @@
 - R6 Siege
     - [Latest Stats](#r6siege-latest-stats)
 
-### /stats/bf1/latest
 <a id="bf1-latest-stats"></a>
+### /stats/bf1/latest
 Retrieves the most recent stats entries for BF1.
 
 | Parameter | Type   | Description                                                                                                |
@@ -18,6 +18,7 @@ Retrieves the most recent stats entries for BF1.
 
 ##### Response
 
+```json
 {
     "mparsons": {
         "general": [
@@ -65,9 +66,10 @@ Retrieves the most recent stats entries for BF1.
         ]
     }
 }
+```
 
-### /stats/bf4/latest
 <a id="bf4-latest-stats"></a>
+### /stats/bf4/latest
 Retrieves the most recent stats entries BF4.
 
 | Parameter | Type   | Description                                                                                                |
@@ -78,8 +80,8 @@ Retrieves the most recent stats entries BF4.
 ##### Response
 Same response as the [BF1 latest stats](#bf1-latest-stats) endpoint.
 
-### /stats/r6siege/latest
 <a id="r6siege-latest-stats"></a>
+### /stats/r6siege/latest
 Retrieves the most recent stats entries R6 Siege.
 
 | Parameter | Type   | Description                                                                                                |
@@ -109,16 +111,13 @@ Retrieves the most recent stats entries R6 Siege.
                 "special_value_3": 0,
                 "created_at": "2018-02-25 02:20:24",
                 "updated_at": "2018-02-25 02:20:24"
-            },
-            {
-              "id": 2,
-              "name": "ash",
-              ...
             }
         ]
     },
     "JimAlmeida": {
-      "operators": [...]
+      "operators": [
+        
+      ]
     }
 }
 ```
