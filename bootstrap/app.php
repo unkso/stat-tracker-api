@@ -50,7 +50,7 @@ $app->singleton(
 
 /*
 |--------------------------------------------------------------------------
-| Register Middleware
+| Regist
 |--------------------------------------------------------------------------
 |
 | Next, we will register the middleware with the application. These can
@@ -59,9 +59,9 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+   App\Http\Middleware\ApiAuthorization::class
+]);
 
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,

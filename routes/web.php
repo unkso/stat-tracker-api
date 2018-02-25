@@ -15,15 +15,15 @@
 */
 
 $router->get('/', function () use ($router) {
-    return "Hello world";
+    return new \Illuminate\Http\Response(["error" => "👻 This is not the page you're looking for."], 404);
 });
-
-$router->get('/debug', function () use ($router) {
-    return phpinfo();
-});
-
 
 $router->post('stats', [
     'as' => 'stats_upload',
     'uses' => 'GameStatsController@uploadStats'
+]);
+
+$router->get('stats', [
+    'as' => 'get_stats',
+    'uses' => 'GameStatsController@getStats'
 ]);

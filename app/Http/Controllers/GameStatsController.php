@@ -37,4 +37,10 @@ class GameStatsController extends Controller
             return new Response(["error" => "Operation failed: {$e->getMessage()}"], 500);
         }
     }
+
+    public function getStats(Request $request) {
+        $gameFilters = $request->input("games");
+        $eventFilters = $request->input("events");
+        $playerFilters = $request->input("players");
+    }
 }

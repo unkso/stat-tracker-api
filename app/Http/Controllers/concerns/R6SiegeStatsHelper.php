@@ -8,6 +8,8 @@ class R6SiegeStatsHelper
 {
     use EntityPersisterTrait;
 
+    const GAME_R6_SIEGE = "r6_siege";
+
     /** @var DatabaseManager */
     private $db;
 

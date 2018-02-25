@@ -110,4 +110,49 @@ class BfStatsHelper
         $record = $this->buildRecordFromArray(self::$weaponFields, $stats);
         return $this->db->table("bf_weapon_stats_log")->insert($record);
     }
+
+    public function findGeneralBy(array $eventFilters, array $playerFilters) {
+        $query = $this->db->table('bf_general_stats_log')
+            ->select(['*']);
+
+        if (!empty($eventFilters)) {
+            $query->whereIn('event', $eventFilters);
+        }
+
+        if (!empty($playerFilters)) {
+            $query->whereIn('player_id', $playerFilters);
+        }
+
+        return (array)$query->get();
+    }
+
+    public function findKitsBy(array $eventFilters, array $playerFilters) {
+        $query = $this->db->table('bf_kit_stats_log')
+            ->select(['*']);
+
+        if (!empty($eventFilters)) {
+            $query->whereIn('event', $eventFilters);
+        }
+
+        if (!empty($playerFilters)) {
+            $query->whereIn('player_id', $playerFilters);
+        }
+
+        return (array)$query->get();
+    }
+
+    public function findWeaponsBy(array $eventFilters, array $playerFilters) {
+        $query = $this->db->table('bf_weapons_stats_log')
+            ->select(['*']);
+
+        if (!empty($eventFilters)) {
+            $query->whereIn('event', $eventFilters);
+        }
+
+        if (!empty($playerFilters)) {
+            $query->whereIn('player_id', $playerFilters);
+        }
+
+        return (array)$query->get();
+    }
 }
