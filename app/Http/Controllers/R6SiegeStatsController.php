@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\concerns\BfStatsHelper;
-use App\Http\Controllers\concerns\BfStatsResponseHelper;
 use App\Http\Controllers\concerns\R6SiegeStatsHelper;
 use App\Http\Controllers\concerns\R6SiegeStatsResponseHelper;
 use Illuminate\Database\DatabaseManager;
