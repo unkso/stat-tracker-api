@@ -15,15 +15,25 @@
 */
 
 $router->get('/', function () use ($router) {
-    return "Hello world";
+    return new \Illuminate\Http\Response(["error" => "👻 This is not the page you're looking for."], 404);
 });
-
-$router->get('/debug', function () use ($router) {
-    return phpinfo();
-});
-
 
 $router->post('stats', [
     'as' => 'stats_upload',
     'uses' => 'GameStatsController@uploadStats'
+]);
+
+$router->get('stats/bf1/latest', [
+    'as' => 'get_latest_stats_bf1',
+    'uses' => 'Bf1StatsController@getLatestStats'
+]);
+
+$router->get('stats/bf4/latest', [
+    'as' => 'get_latest_stats_bf4',
+    'uses' => 'Bf4StatsController@getLatestStats'
+]);
+
+$router->get('stats/r6siege/latest', [
+    'as' => 'get_latest_stats_r6siege',
+    'uses' => 'R6SiegeStatsController@getLatestStats'
 ]);

@@ -110,4 +110,78 @@ class BfStatsHelper
         $record = $this->buildRecordFromArray(self::$weaponFields, $stats);
         return $this->db->table("bf_weapon_stats_log")->insert($record);
     }
+
+    public function findLatestStats(array $gameFilters, array $eventFilters, array $playerFilters) {
+        return [
+            "general" => $this->findLatestGeneralStats($gameFilters, $eventFilters, $playerFilters),
+            "kits" => $this->findLatestKitStats($gameFilters, $eventFilters, $playerFilters),
+            "weapons" => $this->findLatestWeaponStats($gameFilters, $eventFilters, $playerFilters)
+        ];
+    }
+
+    public function findLatestGeneralStats(array $gameFilters, array $eventFilters, array $playerFilters) {
+        $query = $this->db->table('bf_general_stats_log')
+            ->select(['bf_general_stats_log.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'bf_general_stats_log.player_id')
+            ->orderBy('bf_general_stats_log.created_at', 'desc')
+            ->groupBy(['players.id']);
+
+        if (!empty($eventFilters)) {
+            $query->whereIn('event', $eventFilters);
+        }
+
+        if (!empty($playerFilters)) {
+            $query->whereIn('players.gamertag', $playerFilters);
+        }
+
+        if (!empty($gameFilters)) {
+            $query->whereIn('game', $gameFilters);
+        }
+
+        return $query->get()->toArray();
+    }
+
+    public function findLatestKitStats(array $gameFilters, array $eventFilters, array $playerFilters) {
+        $query = $this->db->table('bf_kit_stats_log')
+            ->select(['bf_kit_stats_log.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'bf_kit_stats_log.player_id')
+            ->orderBy('bf_kit_stats_log.created_at', 'desc')
+            ->groupBy(['players.id', 'bf_kit_stats_log.name']);
+
+        if (!empty($eventFilters)) {
+            $query->whereIn('event', $eventFilters);
+        }
+
+        if (!empty($playerFilters)) {
+            $query->whereIn('player_id', $playerFilters);
+        }
+
+        if (!empty($gameFilters)) {
+            $query->whereIn('game', $gameFilters);
+        }
+
+        return $query->get()->toArray();
+    }
+
+    public function findLatestWeaponStats(array $gameFilters, array $eventFilters, array $playerFilters) {
+        $query = $this->db->table('bf_weapon_stats_log')
+            ->select(['bf_weapon_stats_log.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'bf_weapon_stats_log.player_id')
+            ->orderBy('bf_weapon_stats_log.created_at', 'desc')
+            ->groupBy(['players.id', 'bf_weapon_stats_log.name']);
+
+        if (!empty($eventFilters)) {
+            $query->whereIn('event', $eventFilters);
+        }
+
+        if (!empty($playerFilters)) {
+            $query->whereIn('player_id', $playerFilters);
+        }
+
+        if (!empty($gameFilters)) {
+            $query->whereIn('game', $gameFilters);
+        }
+
+        return $query->get()->toArray();
+    }
 }
