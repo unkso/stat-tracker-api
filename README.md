@@ -1,5 +1,7 @@
 # UNKSO Game Stats Tracker API
 
+- All Games
+    - [Upload Player Stats](#upload-player-stats)
 - BF1
     - [Latest Stats](#bf1-latest-stats)
 - BF4
@@ -7,8 +9,90 @@
 - R6 Siege
     - [Latest Stats](#r6siege-latest-stats)
 
+
+<a id="upload-player-stats"></a>
+### POST /stats
+
+##### Request
+
+```json
+{
+  "event": "ibcc",
+  "players": [
+    {
+      "player": "mparsons",
+      "games": {
+        "bf1": {
+          "general": {
+            "accuracy": 0.16848986432890461,
+            "headshots": 2055.0,
+            "heals": 6436.0,
+            "killassists": 1068.0,
+            "kills": 28666.0,
+            "lastupdate": "Sat Feb 24 16:00:49 2018\n",
+            "ptfo": 3350810.0,
+            "repairs": 218.0,
+            "resupplies": 2210.0,
+            "revives": 1016.0,
+            "roundsplayed": 1376.0,
+            "squadscore": 1835650.0,
+            "suppressionassists": 2149.0,
+            "wins": 786.0
+          },
+          "kits": [
+            {
+              "name": "scout",
+              "score": 100,
+              "time": 100,
+              "spm": 100
+            }
+          ],
+          "weapons": [
+            {
+              "name": "Hellriegel 1915 Factory",
+              "kills": 100,
+              "hk": 9.76,
+              "shots": 1,
+              "hits": 1,
+              "accuracy": 1
+            }
+          ]
+        },
+        "siege": {
+          "operators": [
+            {
+              "name": "Buck",
+              "kills": 100,
+              "hk": 9.76,
+              "shots": 1,
+              "hits": 1,
+              "accuracy": 1,
+              "special_name_1": "Kills with shotgun",
+              "special_value_1": 80,
+              "special_name_2": "",
+              "special_value_1": "",
+              "special_name_3": "",
+              "special_value_1": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+##### Response
+
+```json
+{
+  "success": true
+}
+```
+
+
 <a id="bf1-latest-stats"></a>
-### /stats/bf1/latest
+### GET /stats/bf1/latest
 Retrieves the most recent stats entries for BF1.
 
 | Parameter | Type   | Description                                                                                                |
@@ -69,7 +153,7 @@ Retrieves the most recent stats entries for BF1.
 ```
 
 <a id="bf4-latest-stats"></a>
-### /stats/bf4/latest
+### GET /stats/bf4/latest
 Retrieves the most recent stats entries BF4.
 
 | Parameter | Type   | Description                                                                                                |
@@ -81,7 +165,7 @@ Retrieves the most recent stats entries BF4.
 Same response as the [BF1 latest stats](#bf1-latest-stats) endpoint.
 
 <a id="r6siege-latest-stats"></a>
-### /stats/r6siege/latest
+### GET /stats/r6siege/latest
 Retrieves the most recent stats entries R6 Siege.
 
 | Parameter | Type   | Description                                                                                                |
