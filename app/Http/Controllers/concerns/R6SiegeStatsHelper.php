@@ -14,11 +14,13 @@ class R6SiegeStatsHelper
     /** @var array */
     private static $operatorFields = [
         "event",
+        "player_id",
         "name",
         "kills",
         "hk",
         "shots",
         "hits",
+        "accuracy",
         "special_name_1",
         "special_value_1",
         "special_name_2",
@@ -32,10 +34,16 @@ class R6SiegeStatsHelper
         $this->db = $db;
     }
 
-    public function saveStats($eventKey, array $stats) {
-        if (!empty($stats['operators'])) {
-            foreach($stats['operators'] as $operatorStats) {
-                $operatorStats['event'] = $eventKey;
+    /**
+     * @param $eventKey
+     * @param $playerId
+     * @param array $stats
+     */
+    public function saveStats($eventKey, $playerId, array $stats) {
+        if (!empty($stats["operators"])) {
+            foreach($stats["operators"] as $operatorStats) {
+                $operatorStats["event"] = $eventKey;
+                $operatorStats["player_id"] = $playerId;
                 $this->insertOperatorStats($operatorStats);
             }
         }
@@ -43,6 +51,6 @@ class R6SiegeStatsHelper
 
     public function insertOperatorStats(array $stats) {
         $record = $this->buildRecordFromArray(self::$operatorFields, $stats);
-        return $this->db->table('siege_operator_stats_log')->insert($record);
+        return $this->db->table("siege_operator_stats_log")->insert($record);
     }
 }

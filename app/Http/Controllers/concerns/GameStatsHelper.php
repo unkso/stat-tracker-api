@@ -15,11 +15,15 @@ class GameStatsHelper
     /** @var R6SiegeStatsHelper */
     private $siegeStatsHelper;
 
+    /** @var PlayersHelper */
+    private $playersHelper;
+
     public function __construct(DatabaseManager $db)
     {
         $this->db = $db;
         $this->bfStatsHelper = new BfStatsHelper($db);
         $this->siegeStatsHelper = new R6SiegeStatsHelper($db);
+        $this->playersHelper = new PlayersHelper($db);
     }
 
     /**
@@ -35,22 +39,24 @@ class GameStatsHelper
 
     /**
      * @param $eventKey
-     * @param array $player
+     * @param array $playerStats
      * @throws \Exception
      */
-    public function saveSinglePlayerStats ($eventKey, array $player) {
+    public function saveSinglePlayerStats ($eventKey, array $playerStats) {
         try {
+            $player = $this->playersHelper->findOrCreate($playerStats["player"]);
+
             $this->db->beginTransaction();
-            if (!empty($player["games"]["bf1"])) {
-                $this->bfStatsHelper->saveStats($eventKey, BfStatsHelper::GAME_BF1, $player["games"]["bf1"]);
+            if (!empty($playerStats["games"]["bf1"])) {
+                $this->bfStatsHelper->saveStats($eventKey, $player["id"], BfStatsHelper::GAME_BF1, $playerStats["games"]["bf1"]);
             }
 
-            if (!empty($player["games"]["bf4"])) {
-                $this->bfStatsHelper->saveStats($eventKey, BfStatsHelper::GAME_BF4, $player["games"]["bf4"]);
+            if (!empty($playerStats["games"]["bf4"])) {
+                $this->bfStatsHelper->saveStats($eventKey, $player["id"], BfStatsHelper::GAME_BF4, $playerStats["games"]["bf4"]);
             }
 
-            if (!empty($player["games"]['siege'])) {
-                $this->siegeStatsHelper->saveStats($eventKey, $player["games"]["siege"]);
+            if (!empty($playerStats["games"]['siege'])) {
+                $this->siegeStatsHelper->saveStats($eventKey, $player["id"], $playerStats["games"]["siege"]);
             }
 
             $this->db->commit();

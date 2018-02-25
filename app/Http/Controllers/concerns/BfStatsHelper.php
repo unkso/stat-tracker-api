@@ -18,6 +18,7 @@ class BfStatsHelper
     private static $generalFields = [
         "game",
         "event",
+        "player_id",
         "accuracy",
         "headshots",
         "heals",
@@ -28,7 +29,7 @@ class BfStatsHelper
         "repairs",
         "resupplies",
         "roundsplayed",
-        "squardscore",
+        "squadscore",
         "suppressionassists",
         "wins"
     ];
@@ -37,6 +38,7 @@ class BfStatsHelper
     private static $kitFields = [
         "game",
         "event",
+        "player_id",
         "name",
         "score",
         "time",
@@ -47,6 +49,8 @@ class BfStatsHelper
     private static $weaponFields = [
         "game",
         "event",
+        "player_id",
+        "player_id",
         "name",
         "kills",
         "shots",
@@ -61,28 +65,32 @@ class BfStatsHelper
 
     /**
      * @param $eventKey
+     * @param $playerId
      * @param $game
      * @param array $stats
      */
-    public function saveStats($eventKey, $game, array $stats) {
-        if (!empty($stats['general'])) {
-            $stats["general"]['game'] = $game;
-            $stats["general"]['event'] = $eventKey;
+    public function saveStats($eventKey, $playerId, $game, array $stats) {
+        if (!empty($stats["general"])) {
+            $stats["general"]["game"] = $game;
+            $stats["general"]["event"] = $eventKey;
+            $stats["general"]["player_id"] = $playerId;
             $this->insertGeneralStats($stats["general"]);
         }
 
-        if (!empty($stats['kits'])) {
-            foreach($stats['kits'] as $kitStats) {
-                $generalStats['game'] = $game;
-                $generalStats['event'] = $eventKey;
+        if (!empty($stats["kits"])) {
+            foreach($stats["kits"] as $kitStats) {
+                $kitStats["game"] = $game;
+                $kitStats["event"] = $eventKey;
+                $kitStats["player_id"] = $playerId;
                 $this->insertKitStats($kitStats);
             }
         }
 
-        if (!empty($stats['weapons'])) {
-            foreach($stats['weapons'] as $weaponStats) {
-                $generalStats['game'] = $game;
-                $generalStats['event'] = $eventKey;
+        if (!empty($stats["weapons"])) {
+            foreach($stats["weapons"] as $weaponStats) {
+                $weaponStats["game"] = $game;
+                $weaponStats["event"] = $eventKey;
+                $weaponStats["player_id"] = $playerId;
                 $this->insertWeaponStats($weaponStats);
             }
         }
@@ -90,16 +98,16 @@ class BfStatsHelper
 
     public function insertGeneralStats(array $stats) {
         $record = $this->buildRecordFromArray(self::$generalFields, $stats);
-        return $this->db->table('bf_general_stats_log')->insert($record);
+        return $this->db->table("bf_general_stats_log")->insert($record);
     }
 
     public function insertKitStats(array $stats) {
         $record = $this->buildRecordFromArray(self::$kitFields, $stats);
-        return $this->db->table('bf_kit_stats_log')->insert($record);
+        return $this->db->table("bf_kit_stats_log")->insert($record);
     }
 
     public function insertWeaponStats(array $stats) {
         $record = $this->buildRecordFromArray(self::$weaponFields, $stats);
-        return $this->db->table('bf_weapon_stats_log')->insert($record);
+        return $this->db->table("bf_weapon_stats_log")->insert($record);
     }
 }
