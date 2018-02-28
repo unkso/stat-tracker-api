@@ -4,9 +4,14 @@ namespace App\Http\Controllers\concerns;
 
 class BfStatsResponseHelper
 {
+    use StatsResponseHelperTrait;
+
     public function mapAllStatsToPlayers(array $stats, array $response = []) {
         if (!empty($stats["general"])) {
-            $response = $this->mapStatTypeToPlayer("general", $stats, $response);
+            $values = $this->mapStatTypeToPlayer("general", $stats, $response);
+            if (!empty($values)) {
+                $response = $values["general"][0];
+            }
         }
 
         if (!empty($stats["kits"])) {
@@ -15,25 +20,6 @@ class BfStatsResponseHelper
 
         if (!empty($stats["weapons"])) {
             $response = $this->mapStatTypeToPlayer("weapons", $stats, $response);
-        }
-
-        return $response;
-    }
-
-    public function mapStatTypeToPlayer($type, array $stats, array $response = []) {
-        foreach($stats[$type] as $stat) {
-            $stat = (array)$stat;
-            $gamerTag = $stat["gamertag"];
-
-            if (!array_key_exists($stat["gamertag"], $response)) {
-                $response[$gamerTag] = [];
-            }
-
-            if (!array_key_exists($type, $response[$stat["gamertag"]])) {
-                $response[$gamerTag][$type] = [];
-            }
-
-            $response[$gamerTag][$type][] = $this->clean($stat);
         }
 
         return $response;
