@@ -55,8 +55,8 @@ class GameStatsHelper
                 $this->bfStatsHelper->saveStats($eventKey, $player["id"], BfStatsHelper::GAME_BF4, $playerStats["games"]["bf4"]);
             }
 
-            if (!empty($playerStats["games"]['siege'])) {
-                $this->siegeStatsHelper->saveStats($eventKey, $player["id"], $playerStats["games"]["siege"]);
+            if (!empty($playerStats["games"]['r6siege'])) {
+                $this->siegeStatsHelper->saveStats($eventKey, $player["id"], $playerStats["games"]["r6siege"]);
             }
 
             $this->db->commit();
