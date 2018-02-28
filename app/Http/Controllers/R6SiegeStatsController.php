@@ -23,19 +23,23 @@ class R6SiegeStatsController
     }
 
     public function getLatestStats(Request $request) {
-        $eventFilters = $request->input("events");
-        $playerFilters = $request->input("players");
+        try {
+            $eventFilters = $request->input("events");
+            $playerFilters = $request->input("players");
 
-        if (empty($eventFilters)) {
-            $eventFilters = array();
+            if (empty($eventFilters)) {
+                $eventFilters = array();
+            }
+
+            if (empty($playerFilters)) {
+                $playerFilters = array();
+            }
+
+            $stats = $this->siegeStatsHelper->findLatestStats($eventFilters, $playerFilters);
+            $response = $this->siegeResponseHelper->mapAllStatsToPlayers($stats);
+            return new Response($response);
+        } catch (\Exception $e) {
+            return new Response(["error" => $e->getMessage()], 500);
         }
-
-        if (empty($playerFilters)) {
-            $playerFilters = array();
-        }
-
-        $stats = $this->siegeStatsHelper->findLatestStats($eventFilters, $playerFilters);
-        $response = $this->siegeResponseHelper->mapAllStatsToPlayers($stats);
-        return new Response($response);
     }
 }

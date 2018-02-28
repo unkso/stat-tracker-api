@@ -98,14 +98,14 @@ class R6SiegeStatsHelper
             ->select(['siege_general_stats_log.*', 'players.gamertag as gamertag'])
             ->join('players', 'players.id', '=', 'siege_general_stats_log.player_id')
             ->orderBy('siege_general_stats_log.created_at', 'desc')
-            ->groupBy(['players.id', 'siege_general_stats_log.name']);
+            ->groupBy(['players.id']);
 
         if (!empty($eventFilters)) {
             $query->whereIn('event', $eventFilters);
         }
 
         if (!empty($playerFilters)) {
-            $query->whereIn('player_id', $playerFilters);
+            $query->whereIn('players.gamertag', $playerFilters);
         }
 
         return $query->get()->toArray();

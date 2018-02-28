@@ -153,7 +153,7 @@ class BfStatsHelper
         }
 
         if (!empty($playerFilters)) {
-            $query->whereIn('player_id', $playerFilters);
+            $query->whereIn('players.gamertag', $playerFilters);
         }
 
         if (!empty($gameFilters)) {
@@ -175,7 +175,7 @@ class BfStatsHelper
         }
 
         if (!empty($playerFilters)) {
-            $query->whereIn('player_id', $playerFilters);
+            $query->whereIn('players.gamertag', $playerFilters);
         }
 
         if (!empty($gameFilters)) {
