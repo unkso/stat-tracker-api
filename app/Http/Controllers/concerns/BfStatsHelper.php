@@ -123,7 +123,7 @@ class BfStatsHelper
         $query = $this->db->table('bf_general_stats_log')
             ->select(['bf_general_stats_log.*', 'players.gamertag as gamertag'])
             ->join('players', 'players.id', '=', 'bf_general_stats_log.player_id')
-            ->orderBy('bf_general_stats_log.created_at', 'desc')
+            ->orderBy('bf_general_stats_log.created_at', 'asc')
             ->groupBy(['players.id']);
 
         if (!empty($eventFilters)) {
@@ -145,7 +145,7 @@ class BfStatsHelper
         $query = $this->db->table('bf_kit_stats_log')
             ->select(['bf_kit_stats_log.*', 'players.gamertag as gamertag'])
             ->join('players', 'players.id', '=', 'bf_kit_stats_log.player_id')
-            ->orderBy('bf_kit_stats_log.created_at', 'desc')
+            ->orderBy('bf_kit_stats_log.created_at', 'asc')
             ->groupBy(['players.id', 'bf_kit_stats_log.name']);
 
         if (!empty($eventFilters)) {
@@ -167,7 +167,7 @@ class BfStatsHelper
         $query = $this->db->table('bf_weapon_stats_log')
             ->select(['bf_weapon_stats_log.*', 'players.gamertag as gamertag'])
             ->join('players', 'players.id', '=', 'bf_weapon_stats_log.player_id')
-            ->orderBy('bf_weapon_stats_log.created_at', 'desc')
+            ->orderBy('bf_weapon_stats_log.created_at', 'asc')
             ->groupBy(['players.id', 'bf_weapon_stats_log.name']);
 
         if (!empty($eventFilters)) {

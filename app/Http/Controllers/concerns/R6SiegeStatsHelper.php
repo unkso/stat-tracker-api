@@ -97,7 +97,7 @@ class R6SiegeStatsHelper
         $query = $this->db->table('siege_general_stats_log')
             ->select(['siege_general_stats_log.*', 'players.gamertag as gamertag'])
             ->join('players', 'players.id', '=', 'siege_general_stats_log.player_id')
-            ->orderBy('siege_general_stats_log.created_at', 'desc')
+            ->orderBy('siege_general_stats_log.created_at', 'asc')
             ->groupBy(['players.id']);
 
         if (!empty($eventFilters)) {
@@ -115,8 +115,9 @@ class R6SiegeStatsHelper
         $query = $this->db->table('siege_operator_stats_log')
             ->select(['siege_operator_stats_log.*', 'players.gamertag as gamertag'])
             ->join('players', 'players.id', '=', 'siege_operator_stats_log.player_id')
-            ->orderBy('siege_operator_stats_log.created_at', 'desc')
-            ->groupBy(['players.id', 'siege_operator_stats_log.name']);
+            ->orderBy('siege_operator_stats_log.created_at', 'asc')
+
+        ->groupBy(['players.id', 'siege_operator_stats_log.name'])  ;
 
         if (!empty($eventFilters)) {
             $query->whereIn('event', $eventFilters);

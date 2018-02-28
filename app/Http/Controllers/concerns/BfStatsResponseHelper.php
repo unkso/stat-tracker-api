@@ -8,10 +8,7 @@ class BfStatsResponseHelper
 
     public function mapAllStatsToPlayers(array $stats, array $response = []) {
         if (!empty($stats["general"])) {
-            $values = $this->mapStatTypeToPlayer("general", $stats, $response);
-            if (!empty($values)) {
-                $response = $values["general"][0];
-            }
+            $response = $this->mapStatTypeToPlayer("general", $stats, $response, true);
         }
 
         if (!empty($stats["kits"])) {
