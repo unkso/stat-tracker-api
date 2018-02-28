@@ -59,6 +59,20 @@
           ]
         },
         "siege": {
+          "general": {
+            "score": 123,
+            "roundsplayed": 1850,
+            "reinforcements": 6762,
+            "barricades": 2245,
+            "killassists": 2106,
+            "gadgets": 4629,
+            "meleekills": 33,
+            "penetrationkills": 395,
+            "revives": 282,
+            "dbno": 2007,
+            "wins": 1103,
+            "kills": 4337
+          },
           "operators": [
             {
               "name": "Buck",
@@ -180,7 +194,7 @@ Retrieves the most recent stats entries R6 Siege.
     "mparsons": {
         "general": {
           "id": 1,
-          "score": 0,
+          "score": 123,
           "roundsplayed": 1850,
           "reinforcements": 6762,
           "barricades": 2245,
