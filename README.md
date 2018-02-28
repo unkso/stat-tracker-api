@@ -178,6 +178,23 @@ Retrieves the most recent stats entries R6 Siege.
 ```json
 {
     "mparsons": {
+        "general": {
+          "id": 1,
+          "score": 0,
+          "roundsplayed": 1850,
+          "reinforcements": 6762,
+          "barricades": 2245,
+          "killassists": 2106,
+          "gadgets": 4629,
+          "meleekills": 33,
+          "penetrationkills": 395,
+          "revives": 282,
+          "dbno": 2007,
+          "wins": 1103,
+          "kills": 4337,
+          "created_at": "2018-02-28 04:14:36",
+          "updated_at": "2018-02-28 04:33:53"
+        },
         "operators": [
             {
                 "id": 1,
@@ -197,11 +214,6 @@ Retrieves the most recent stats entries R6 Siege.
                 "updated_at": "2018-02-25 02:20:24"
             }
         ]
-    },
-    "JimAlmeida": {
-      "operators": [
-        
-      ]
     }
 }
 ```
