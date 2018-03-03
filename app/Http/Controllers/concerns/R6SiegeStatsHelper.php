@@ -29,12 +29,7 @@ class R6SiegeStatsHelper
         "dbno",
         "wins",
         "kills",
-        "special_name_1",
-        "special_value_1",
-        "special_name_2",
-        "special_value_2",
-        "special_name_3",
-        "special_value_3"
+        "headshots"
     ];
 
     /** @var array */
@@ -89,43 +84,70 @@ class R6SiegeStatsHelper
     public function findLatestStats(array $eventFilters, array $playerFilters) {
         return [
             "general" => $this->findLatestGeneralStats($eventFilters, $playerFilters),
-            "operator" => $this->findLatestOperatorStats($eventFilters, $playerFilters),
+            "operators" => $this->findLatestOperatorStats($eventFilters, $playerFilters),
         ];
     }
 
     public function findLatestGeneralStats(array $eventFilters, array $playerFilters) {
-        $query = $this->db->table('siege_general_stats_log')
-            ->select(['siege_general_stats_log.*', 'players.gamertag as gamertag'])
-            ->join('players', 'players.id', '=', 'siege_general_stats_log.player_id')
-            ->orderBy('siege_general_stats_log.created_at', 'asc')
-            ->groupBy(['players.id']);
+        $where = [];
+        $whereParams = [];
 
         if (!empty($eventFilters)) {
-            $query->whereIn('event', $eventFilters);
+            $where[] = 'AND event IN (:events)';
+            $whereParams['events'] = $eventFilters;
         }
 
         if (!empty($playerFilters)) {
-            $query->whereIn('players.gamertag', $playerFilters);
+            $where[] = 'AND players.gamertag IN (:players)';
+            $whereParams['players'] = $playerFilters;
         }
+
+        $whereStmt = implode(' ', $where);
+
+        $query = $this->db->table('siege_general_stats_log AS siege')
+            ->select(['siege.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'siege.player_id')
+            ->whereRaw("siege.created_at IN (
+              SELECT MAX(created_at)
+              FROM siege_general_stats_log
+              WHERE siege.player_id = player_id {$whereStmt}
+            )", $whereParams);
 
         return $query->get()->toArray();
     }
 
     public function findLatestOperatorStats(array $eventFilters, array $playerFilters) {
-        $query = $this->db->table('siege_operator_stats_log')
-            ->select(['siege_operator_stats_log.*', 'players.gamertag as gamertag'])
-            ->join('players', 'players.id', '=', 'siege_operator_stats_log.player_id')
-            ->orderBy('siege_operator_stats_log.created_at', 'asc')
+        $where = [];
+        $whereParams = [];
 
-        ->groupBy(['players.id', 'siege_operator_stats_log.name'])  ;
+        if (!empty($gameFilters)) {
+            $where[] = 'AND game IN (:games)';
+            $whereParams['games'] = $gameFilters;
+        }
 
         if (!empty($eventFilters)) {
-            $query->whereIn('event', $eventFilters);
+            $where[] = 'AND event IN (:events)';
+            $whereParams['events'] = $eventFilters;
         }
 
         if (!empty($playerFilters)) {
-            $query->whereIn('player_id', $playerFilters);
+            $where[] = 'AND players.gamertag IN (:players)';
+            $whereParams['players'] = $playerFilters;
         }
+
+        $whereStmt = implode(' ', $where);
+
+        $query = $this->db->table('siege_operator_stats_log AS siege')
+            ->select(['siege.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'siege.player_id')
+            ->whereRaw("
+                siege.created_at IN (
+                  SELECT MAX(created_at)
+                  FROM siege_operator_stats_log
+                  WHERE siege.player_id = player_id AND siege.name = name {$whereStmt}
+                  GROUP BY name
+                )
+            ", $whereParams);
 
         return $query->get()->toArray();
     }

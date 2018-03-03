@@ -31,7 +31,8 @@ class BfStatsHelper
         "roundsplayed",
         "squadscore",
         "suppressionassists",
-        "wins"
+        "wins",
+        "revives"
     ];
 
     /** @var array */
@@ -120,67 +121,106 @@ class BfStatsHelper
     }
 
     public function findLatestGeneralStats(array $gameFilters, array $eventFilters, array $playerFilters) {
-        $query = $this->db->table('bf_general_stats_log')
-            ->select(['bf_general_stats_log.*', 'players.gamertag as gamertag'])
-            ->join('players', 'players.id', '=', 'bf_general_stats_log.player_id')
-            ->orderBy('bf_general_stats_log.created_at', 'asc')
-            ->groupBy(['players.id']);
+        $where = [];
+        $whereParams = [];
+
+        if (!empty($gameFilters)) {
+            $where[] = 'AND game IN (:games)';
+            $whereParams['games'] = $gameFilters;
+        }
 
         if (!empty($eventFilters)) {
-            $query->whereIn('event', $eventFilters);
+            $where[] = 'AND event IN (:events)';
+            $whereParams['events'] = $eventFilters;
         }
 
         if (!empty($playerFilters)) {
-            $query->whereIn('players.gamertag', $playerFilters);
+            $where[] = 'AND players.gamertag IN (:players)';
+            $whereParams['players'] = $playerFilters;
         }
 
-        if (!empty($gameFilters)) {
-            $query->whereIn('game', $gameFilters);
-        }
+        $whereStmt = implode(' ', $where);
+
+        $query = $this->db->table('bf_general_stats_log AS bf')
+            ->select(['bf.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'bf.player_id')
+            ->whereRaw("bf.created_at IN (
+              SELECT MAX(created_at)
+              FROM bf_general_stats_log
+              WHERE bf.player_id = player_id {$whereStmt}
+            )", $whereParams);
 
         return $query->get()->toArray();
     }
 
     public function findLatestKitStats(array $gameFilters, array $eventFilters, array $playerFilters) {
-        $query = $this->db->table('bf_kit_stats_log')
-            ->select(['bf_kit_stats_log.*', 'players.gamertag as gamertag'])
-            ->join('players', 'players.id', '=', 'bf_kit_stats_log.player_id')
-            ->orderBy('bf_kit_stats_log.created_at', 'asc')
-            ->groupBy(['players.id', 'bf_kit_stats_log.name']);
+        $where = [];
+        $whereParams = [];
+
+        if (!empty($gameFilters)) {
+            $where[] = 'AND game IN (:games)';
+            $whereParams['games'] = $gameFilters;
+        }
 
         if (!empty($eventFilters)) {
-            $query->whereIn('event', $eventFilters);
+            $where[] = 'AND event IN (:events)';
+            $whereParams['events'] = $eventFilters;
         }
 
         if (!empty($playerFilters)) {
-            $query->whereIn('players.gamertag', $playerFilters);
+            $where[] = 'AND players.gamertag IN (:players)';
+            $whereParams['players'] = $playerFilters;
         }
 
-        if (!empty($gameFilters)) {
-            $query->whereIn('game', $gameFilters);
-        }
+        $whereStmt = implode(' ', $where);
+
+        $query = $this->db->table('bf_kit_stats_log AS bf')
+            ->select(['bf.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'bf.player_id')
+            ->whereRaw("
+                bf.created_at IN (
+                  SELECT MAX(created_at)
+                  FROM bf_kit_stats_log
+                  WHERE bf.player_id = player_id AND bf.name = name {$whereStmt}
+                  GROUP BY name
+                )
+            ", $whereParams);
 
         return $query->get()->toArray();
     }
 
     public function findLatestWeaponStats(array $gameFilters, array $eventFilters, array $playerFilters) {
-        $query = $this->db->table('bf_weapon_stats_log')
-            ->select(['bf_weapon_stats_log.*', 'players.gamertag as gamertag'])
-            ->join('players', 'players.id', '=', 'bf_weapon_stats_log.player_id')
-            ->orderBy('bf_weapon_stats_log.created_at', 'asc')
-            ->groupBy(['players.id', 'bf_weapon_stats_log.name']);
+        $where = [];
+        $whereParams = [];
+
+        if (!empty($gameFilters)) {
+            $where[] = 'AND game IN (:games)';
+            $whereParams['games'] = $gameFilters;
+        }
 
         if (!empty($eventFilters)) {
-            $query->whereIn('event', $eventFilters);
+            $where[] = 'AND event IN (:events)';
+            $whereParams['events'] = $eventFilters;
         }
 
         if (!empty($playerFilters)) {
-            $query->whereIn('players.gamertag', $playerFilters);
+            $where[] = 'AND players.gamertag IN (:players)';
+            $whereParams['players'] = $playerFilters;
         }
 
-        if (!empty($gameFilters)) {
-            $query->whereIn('game', $gameFilters);
-        }
+        $whereStmt = implode(' ', $where);
+
+        $query = $this->db->table('bf_weapon_stats_log AS bf')
+            ->select(['bf.*', 'players.gamertag as gamertag'])
+            ->join('players', 'players.id', '=', 'bf.player_id')
+            ->whereRaw("
+                bf.created_at IN (
+                  SELECT MAX(created_at)
+                  FROM bf_weapon_stats_log
+                  WHERE bf.player_id = player_id AND bf.name = name {$whereStmt}
+                  GROUP BY name
+                )
+            ", $whereParams);
 
         return $query->get()->toArray();
     }
