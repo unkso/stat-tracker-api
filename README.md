@@ -106,7 +106,7 @@
 
 
 <a id="bf1-latest-stats"></a>
-### GET /stats/bf1/latest
+### Latest BF1 stats: GET /stats/bf1/latest
 Retrieves the most recent stats entries for BF1.
 
 | Parameter | Type   | Description                                                                                                |
@@ -167,7 +167,7 @@ Retrieves the most recent stats entries for BF1.
 ```
 
 <a id="bf4-latest-stats"></a>
-### GET /stats/bf4/latest
+### Latest BF4 stats: GET /stats/bf4/latest
 Retrieves the most recent stats entries BF4.
 
 | Parameter | Type   | Description                                                                                                |
@@ -179,7 +179,7 @@ Retrieves the most recent stats entries BF4.
 Same response as the [BF1 latest stats](#bf1-latest-stats) endpoint.
 
 <a id="r6siege-latest-stats"></a>
-### GET /stats/r6siege/latest
+### Latest Siege stats: GET /stats/r6siege/latest
 Retrieves the most recent stats entries R6 Siege.
 
 | Parameter | Type   | Description                                                                                                |
