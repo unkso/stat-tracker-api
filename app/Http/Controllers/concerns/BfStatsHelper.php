@@ -32,7 +32,11 @@ class BfStatsHelper
         "squadscore",
         "suppressionassists",
         "wins",
-        "revives"
+        "revives",
+        "time_played",
+        "teamwork_index",
+        "ptfo_index",
+        "is_clan_member"
     ];
 
     /** @var array */
