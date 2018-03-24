@@ -22,10 +22,10 @@ class CreateSiegeGeneralStatsLog extends Migration
             $table->integer('roundsplayed')->unsigned();
             $table->integer('reinforcements')->unsigned();
             $table->integer('barricades')->unsigned();
-            $table->integer('killassists')->unsigned();
+            $table->integer('kill_assists')->unsigned();
             $table->integer('gadgets')->unsigned();
-            $table->integer('meleekills')->unsigned();
-            $table->integer('penetrationkills')->unsigned();
+            $table->integer('melee_kills')->unsigned();
+            $table->integer('penetration_kills')->unsigned();
             $table->integer('revives')->unsigned();
             $table->integer('dbno')->unsigned();
             $table->integer('wins')->unsigned();

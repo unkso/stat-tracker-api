@@ -36,7 +36,12 @@ class BfStatsHelper
         "time_played",
         "teamwork_index",
         "ptfo_index",
-        "is_clan_member"
+        "is_clan_member",
+        "flags_captured",
+        "flags_defended",
+        "bombs_placed",
+        "bombs_defused",
+        "orders_completed"
     ];
 
     /** @var array */
