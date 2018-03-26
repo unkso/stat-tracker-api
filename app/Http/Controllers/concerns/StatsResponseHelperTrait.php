@@ -28,4 +28,17 @@ trait StatsResponseHelperTrait
 
         return $response;
     }
+
+    public function movePlayerToObject(array $stats) {
+        $result = [
+            "players" => []
+        ];
+
+        foreach($stats as $gamertag => $records) {
+            $records["player"] = $gamertag;
+            $result["players"][] = $records;
+        }
+
+        return $result;
+    }
 }

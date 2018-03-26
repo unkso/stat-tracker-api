@@ -14,7 +14,7 @@ class R6SiegeStatsResponseHelper
             $response = $this->mapStatTypeToPlayer("operators", $stats, $response);
         }
 
-        return $response;
+        return $this->movePlayerToObject($response);
     }
 
     public function clean(array $record) {

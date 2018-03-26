@@ -19,7 +19,7 @@ class BfStatsResponseHelper
             $response = $this->mapStatTypeToPlayer("weapons", $stats, $response);
         }
 
-        return $response;
+        return $this->movePlayerToObject($response);
     }
 
     public function clean(array $record) {
