@@ -41,7 +41,8 @@ class BfStatsHelper
         "flags_defended",
         "bombs_placed",
         "bombs_defused",
-        "orders_completed"
+        "orders_completed",
+        "region"
     ];
 
     /** @var array */
