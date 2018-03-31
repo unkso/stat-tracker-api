@@ -17,19 +17,19 @@ class CreateSiegeGeneralStatsLog extends Migration
         Schema::create('siege_general_stats_log', function (Blueprint $table) {
             $table->increments('id');
             $table->string("event");
-            $table->integer("player_id")->unsigned();
-            $table->integer('score')->unsigned();
-            $table->integer('roundsplayed')->unsigned();
-            $table->integer('reinforcements')->unsigned();
-            $table->integer('barricades')->unsigned();
-            $table->integer('kill_assists')->unsigned();
-            $table->integer('gadgets')->unsigned();
-            $table->integer('melee_kills')->unsigned();
-            $table->integer('penetration_kills')->unsigned();
-            $table->integer('revives')->unsigned();
-            $table->integer('dbno')->unsigned();
-            $table->integer('wins')->unsigned();
-            $table->integer('kills')->unsigned();
+            $table->integer("player_id")->unsigned()->default(0);
+            $table->integer('score')->unsigned()->default(0);
+            $table->integer('rounds_played')->unsigned()->default(0);
+            $table->integer('reinforcements')->unsigned()->default(0);
+            $table->integer('barricades')->unsigned()->default(0);
+            $table->integer('kill_assists')->unsigned()->default(0);
+            $table->integer('gadgets')->unsigned()->default(0);
+            $table->integer('melee_kills')->unsigned()->default(0);
+            $table->integer('penetration_kills')->unsigned()->default(0);
+            $table->integer('revives')->unsigned()->default(0);
+            $table->integer('dbno')->unsigned()->default(0);
+            $table->integer('wins')->unsigned()->default(0);
+            $table->integer('kills')->unsigned()->default(0);
             $table->timestamps();
         });
 

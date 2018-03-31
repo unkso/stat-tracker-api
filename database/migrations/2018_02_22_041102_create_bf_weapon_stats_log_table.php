@@ -20,10 +20,10 @@ class CreateBfWeaponStatsLogTable extends Migration
             $table->string("game");
             $table->integer("player_id")->unsigned();
             $table->string("name");
-            $table->integer("kills");
-            $table->integer("shots");
-            $table->integer("hits");
-            $table->double("accuracy");
+            $table->integer("kills")->unsigned()->default(0);
+            $table->integer("shots")->unsigned()->default(0);
+            $table->integer("hits")->unsigned()->default(0);
+            $table->double("accuracy")->unsigned()->default(0);
             $table->timestamps();
         });
 

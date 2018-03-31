@@ -14,7 +14,7 @@ class AddRevivesToBfGeneral extends Migration
     public function up()
     {
         Schema::table('bf_general_stats_log', function (Blueprint $table) {
-            $table->integer("revives")->unsigned();
+            $table->integer("revives")->unsigned()->default(0);
         });
     }
 

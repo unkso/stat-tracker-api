@@ -14,11 +14,11 @@ class AddBfFlagAndBombPtfoStats extends Migration
     public function up()
     {
         Schema::table('bf_general_stats_log', function (Blueprint $table) {
-            $table->integer('flags_captured')->unsigned();
-            $table->integer('flags_defended')->unsigned();
-            $table->integer('bombs_placed')->unsigned();
-            $table->integer('bombs_defused')->unsigned();
-            $table->integer('orders_completed')->unsigned();
+            $table->integer('flags_captured')->unsigned()->default(0);
+            $table->integer('flags_defended')->unsigned()->default(0);
+            $table->integer('bombs_placed')->unsigned()->default(0);
+            $table->integer('bombs_defused')->unsigned()->default(0);
+            $table->integer('orders_completed')->unsigned()->default(0);
         });
     }
 

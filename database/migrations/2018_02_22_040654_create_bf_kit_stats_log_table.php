@@ -18,11 +18,11 @@ class CreateBfKitStatsLogTable extends Migration
             $table->increments('id');
             $table->string("event");
             $table->string("game");
-            $table->integer("player_id")->unsigned();
+            $table->integer("player_id")->unsigned()->default(0);
             $table->string("name");
-            $table->double("score")->unsigned();
-            $table->bigInteger("time")->unsigned();
-            $table->double("spm")->unsigned();
+            $table->double("score")->unsigned()->default(0);
+            $table->bigInteger("time")->unsigned()->default(0);
+            $table->double("spm")->unsigned()->default(0);
             $table->timestamps();
         });
 

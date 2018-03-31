@@ -14,7 +14,7 @@ class AddHeadshotsToSiegeGeneral extends Migration
     public function up()
     {
         Schema::table('siege_general_stats_log', function (Blueprint $table) {
-            $table->integer("headshots")->unsigned();
+            $table->integer("headshots")->unsigned()->default(0);
         });
     }
 

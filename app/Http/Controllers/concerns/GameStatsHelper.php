@@ -33,7 +33,9 @@ class GameStatsHelper
      */
     public function saveAllPlayerStats ($eventKey, array $playersStats) {
         foreach ($playersStats as $player) {
-            $this->saveSinglePlayerStats($eventKey, $player);
+            if (!is_null($player)) {
+                $this->saveSinglePlayerStats($eventKey, $player);
+            }
         }
     }
 

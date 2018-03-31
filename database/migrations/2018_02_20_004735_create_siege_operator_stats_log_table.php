@@ -17,13 +17,13 @@ class CreateSiegeOperatorStatsLogTable extends Migration
         Schema::create('siege_operator_stats_log', function (Blueprint $table) {
             $table->increments('id');
             $table->string("event");
-            $table->integer("player_id")->unsigned();
-            $table->string("name");
-            $table->integer("kills")->unsigned();
-            $table->double("hk")->unsigned();
-            $table->integer("shots")->unsigned();
-            $table->integer("hits")->unsigned();
-            $table->double("accuracy")->unsigned();
+            $table->integer("player_id")->unsigned()->default(0);
+            $table->string("name")->default(0);
+            $table->integer("kills")->unsigned()->default(0);
+            $table->double("hk")->unsigned()->default(0);
+            $table->integer("shots")->unsigned()->default(0);
+            $table->integer("hits")->unsigned()->default(0);
+            $table->double("accuracy")->unsigned()->default(0);
             $table->string("special_name_1");
             $table->double("special_value_1");
             $table->string("special_name_2");

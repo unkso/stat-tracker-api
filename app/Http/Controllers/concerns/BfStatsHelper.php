@@ -35,6 +35,7 @@ class BfStatsHelper
         "revives",
         "time_played",
         "teamwork_index",
+        "activity_index",
         "ptfo_index",
         "is_clan_member",
         "flags_captured",

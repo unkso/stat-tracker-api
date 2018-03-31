@@ -14,7 +14,7 @@ class AddRegionColumnToBf1 extends Migration
     public function up()
     {
         Schema::table('bf_general_stats_log', function (Blueprint $table) {
-            $table->integer('region')->unsigned();
+            $table->integer('region')->unsigned()->default(0);
         });
     }
 

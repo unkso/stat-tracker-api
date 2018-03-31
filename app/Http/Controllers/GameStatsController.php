@@ -14,22 +14,23 @@ class GameStatsController extends Controller
 
     public function __construct(DatabaseManager $db)
     {
+
         $this->gameStatsHelper = new GameStatsHelper($db);
     }
 
     public function uploadStats(Request $request) {
-        $eventKey = $request->input('event');
-        $playersData = $request->input('players');
-
-        if (empty($eventKey)) {
-            return new Response(["error" => 'Parameter "event" is missing.'], 400);
-        }
-
-        if (empty($playersData)) {
-            return new Response(["error" => 'Parameter "players" is missing.'], 400);
-        }
-
         try {
+            $eventKey = $request->input('event');
+            $playersData = $request->input('players');
+
+            if (empty($eventKey)) {
+                return new Response(["error" => 'Parameter "event" is missing.'], 400);
+            }
+
+            if (empty($playersData)) {
+                return new Response(["error" => 'Parameter "players" is missing.'], 400);
+            }
+
             $this->gameStatsHelper->saveAllPlayerStats($eventKey, $playersData);
 
             return new Response(["success" => true], 200);
